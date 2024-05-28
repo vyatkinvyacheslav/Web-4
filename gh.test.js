@@ -3,7 +3,7 @@ let page;
 beforeEach(async () => {
   page = await browser.newPage();
   await page.goto("https://github.com/team");
-});
+}, 150000);
 
 afterEach(() => {
   page.close();
@@ -15,15 +15,13 @@ describe("Github page tests", () => {
     await firstLink.click();
     await page.waitForSelector('h1');
     const title2 = await page.title();
-    expect(title2).toEqual('GitHub: Where the world builds software · GitHub');
-    testTimeout: 100000
-  });
+    expect(title2).toEqual('GitHub: Lets build from here · GitHub');
+    }, 100000);
 
   test("The first link attribute", async () => {
     const actual = await page.$eval("a", link => link.getAttribute('href') );
     expect(actual).toEqual("#start-of-content");
-    testTimeout: 100000
-  });
+    }, 100000);
 
   test("The page contains Sign in button", async () => {
     const btnSelector = ".btn-large-mktg.btn-mktg";
@@ -32,73 +30,45 @@ describe("Github page tests", () => {
     });
     const actual = await page.$eval(btnSelector, link => link.textContent);
     expect(actual).toContain("Get started with Team")
-    testTimeout: 100000
-  });
+    }, 100000);
 
-
-beforeEach(async () => {
-  page = await browser.newPage();
-  await page.goto("https://resources.github.com/newsletter");
 });
+    
 
-afterEach(() => {
-  page.close();
-});
+
+describe("Github other page tests", () => {
 
   test("1", async () => {
+    await page.goto("https://resources.github.com/newsletter");
     const btnSelector = ".hero-section-brand-heading";
     await page.waitForSelector(btnSelector, {
     visible: true,
-  });
+    });
     const actual = await page.$eval(btnSelector, link => link.textContent);
     expect(actual).toContain("Subscribe to our developer newsletter")
-    testTimeout: 100000
-  });
+    }, 150000);
 
-
-
-  beforeEach(async () => {
-    page = await browser.newPage();
+   
+  test("2", async () => {
     await page.goto("https://github.com/marketplace?type=actions");
-  });
-  
-  afterEach(() => {
-    page.close();
-  });
-  
-    test("2", async () => {
-      const btnSelector = ".lh-condensed text-wrap-balance";
-      await page.waitForSelector(btnSelector, {
-      visible: true,
+    const btnSelector = ".lh-condensed text-wrap-balance";
+    await page.waitForSelector(btnSelector, {
+    visible: true,
     });
-      const actual = await page.$eval(btnSelector, link => link.textContent);
-      expect(actual).toContain("Enhance your workflow with extensions")
-      testTimeout: 100000
-    });
-
-
-    beforeEach(async () => {
-      page = await browser.newPage();
-      await page.goto("https://github.com/pricing");
-    });
-    
-    afterEach(() => {
-      page.close();
-    });
-    
-      test("3", async () => {
-        const btnSelector = ".h2-mktg";
-        await page.waitForSelector(btnSelector, {
-        visible: true,
-      });
-        const actual = await page.$eval(btnSelector, link => link.textContent);
-        expect(actual).toContain("Get the complete developer platform.")
-        testTimeout: 110000
-      });
+    const actual = await page.$eval(btnSelector, link => link.textContent);
+    expect(actual).toContain("Enhance your workflow with extensions")
+    }, 150000);
 
       
-
-
+  test("3", async () => {
+    await page.goto("https://github.com/pricing");
+    const btnSelector = ".h2-mktg";
+    await page.waitForSelector(btnSelector, {
+    visible: true,
+    });
+    const actual = await page.$eval(btnSelector, link => link.textContent);
+    expect(actual).toContain("Get the complete developer platform.")
+    }, 150000);
       
 });
 
